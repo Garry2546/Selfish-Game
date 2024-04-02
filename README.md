@@ -1,26 +1,36 @@
-## Deadline and Submission
+Implementation of a card game, Selfish (Space Edition).
+## Game Specs
+This is a game for 2-5 players. There is one difference in the rules for a two-player game that
+you should be aware of.
 
-The submission deadline is **May 3rd 2023 (Wednesday of week 11) at 12 pm (noon)**. You must use Gitlab to submit this coursework and should follow department guidelines on how to do this. The final submission must be **on the main branch** and tagged with the **tag selfish** .
+## Death
+A player dies anytime they run out of Oxygen cards. This may be during their turn, or it may
+be during someone else's turn. The ONLY exception is  you are allowed to discard your final 2 Oxygens to travel
+forward in space, in the hope that your Space Card grants you additional oxygen. However, if it doesn't, you die and are out of the game.
 
-## Important sources of information
+Note that you die and are out of the game even if travelling forward in space has put you
+level with the ship.
+Dead players should immediately discard their hand. In the original game, the player card for
+a dead player remains at the top of the stack but is flipped over. In this coursework, the track
+for a player therefore remains unchanged when the player dies.
 
-Before you start, you should read the following (in this order)
+## Game (Action)Cards
+Although it might be foolish to do so, there's no rule that says you can't target a dead player
+(it's up to you whether your game allows this).
+# Hole in Suit: The targeted Oxygen cards go into the Game Card Discard pile.
+# Oxygen Siphon: The targeted Oxygen cards go into the current player's hand.
+# Rocket Booster: The player follows all the usual steps for travel (i.e. they draw a Space Card) but without any need to discard Oxygen.
 
-1. The manual
-2. The UML diagram
-3. The spec
-4. The getting started guide (optional, but recommended)
-
-Other sources of information:
-
-* [The forum](https://online.manchester.ac.uk/webapps/discussionboard/do/forum?action=list_threads&course_id=_72765_1&nav=discussion_board&conf_id=_445540_1&forum_id=_635168_1)
-* The labs
-* The output of [Jenkins continuous testing](https://ci.cs.manchester.ac.uk/jenkins/)
+## Space Cards
+# Gravitational Anomaly: At no point does this card enter the drawing player's track.
+# Hyperspace: This card is placed in the track and a second Space Card is immediately drawn.
+# Solar Flare: When this card is at the top of a players track (i.e. directly behind them) thenthat player cannot play any Game Cards during their turn, nor can they play a Sheild card to block another player's action. However, all other aspects of the game continue as normal for the player (card pickup, breathe/move/discard).
+# Tether: The card from the track of the player being moved back goes to the space discard pile. The player moving forward draws from the space deck.
+# Wormhole: When two players swap places, it is only their track of Space Cards that are swapped. All other player/Astronaut state is unchanged. Thus, if a player trades places with a corpse, the dead player remains dead, and the alive player remains alive. If a player swaps with a player who is directly in front of a Solar Flare, then the swapping player is now subject to the effects of the Solar Flare and the swapee is no longer subject to those effects.
 
 ## Running the code
 
-This excercise you can implement a console or JavaFX application as you prefer. The console application will not be marked. The JavaFX application is optional and will not be marked unless all tests pass and you request a marking slot.
-
+This excercise you can implement a console or JavaFX application as you prefer.
 We have provided a (near-empty) console application in your repository, we refer to this in other documents as the "driver". To run the provided driver:
 
 ```
@@ -30,10 +40,3 @@ We have provided a (near-empty) console application in your repository, we refer
 ```
 
 
-## Running the tests
-
-There are two ways of testing your project.
-
-1. Locally on your PC. In your locally cloned repository, run the script `./test.sh`.
- 
-2. Remotely on the [Jenkins continuous testing](https://ci.cs.manchester.ac.uk/jenkins/). Every time you push your current repository to GiLab, you will be able to see the outcome of the tests in Jenkins. This server runs the tests against the contents of your remote repository (i.e. only pushed commits).
