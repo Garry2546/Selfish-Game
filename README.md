@@ -18,14 +18,20 @@ for a player therefore remains unchanged when the player dies.
 Although it might be foolish to do so, there's no rule that says you can't target a dead player
 (it's up to you whether your game allows this).
  Hole in Suit: The targeted Oxygen cards go into the Game Card Discard pile.
+ 
  Oxygen Siphon: The targeted Oxygen cards go into the current player's hand.
+ 
  Rocket Booster: The player follows all the usual steps for travel (i.e. they draw a Space Card) but without any need to discard Oxygen.
 
 ## Space Cards
  Gravitational Anomaly: At no point does this card enter the drawing player's track.
+
  Hyperspace: This card is placed in the track and a second Space Card is immediately drawn.
+ 
  Solar Flare: When this card is at the top of a players track (i.e. directly behind them) thenthat player cannot play any Game Cards during their turn, nor can they play a Sheild card to block another player's action. However, all other aspects of the game continue as normal for the player (card pickup, breathe/move/discard).
+ 
  Tether: The card from the track of the player being moved back goes to the space discard pile. The player moving forward draws from the space deck.
+ 
  Wormhole: When two players swap places, it is only their track of Space Cards that are swapped. All other player/Astronaut state is unchanged. Thus, if a player trades places with a corpse, the dead player remains dead, and the alive player remains alive. If a player swaps with a player who is directly in front of a Solar Flare, then the swapping player is now subject to the effects of the Solar Flare and the swapee is no longer subject to those effects.
 
 ## Running the code
