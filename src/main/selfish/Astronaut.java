@@ -5,14 +5,13 @@ import java.util.*;
 import selfish.deck.*;
 
 /**
- * all players class for controlling them x......
+ * all players class for controlling them
  * 
  * @author Geetinder Singh
  * @ selfish
  * @version JDK 11.0.16
  */
 public class Astronaut implements Serializable {
-
     /**
      * @param game reference variable of GameEngine
      */
@@ -39,7 +38,8 @@ public class Astronaut implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * parametrized class constutor
+     * Constructs an instance of the Astronaut class with the specified name and
+     * associated game engine context.
      * 
      * @param name for storing name of players
      * @param game reference variable for GameEngine class
@@ -50,7 +50,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * adding card to the hand of player methode
+     * Adds a card to the player's hand, determining if it's an oxygen card or an
+     * action card based on its type, and stores it in the respective list.
      * 
      * @param card class type var
      */
@@ -64,7 +65,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * tracking the player methode
+     * Adds a card to the track collection associated with this player, which may
+     * affect gameplay depending on the card's function.
      * 
      * @param card class type variable
      */
@@ -74,7 +76,9 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for breathing card
+     * Processes the action of breathing for the astronaut, which involves using
+     * oxygen cards. It may split higher oxygen cards into two if necessary and
+     * checks if the player is still alive.
      * 
      * @return oxygen list size
      */
@@ -114,7 +118,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * getter for distance from ship to player
+     * Returns the astronaut's current distance from the ship, which is determined
+     * by the number of cards in their track.
      * 
      * @return track size
      */
@@ -124,35 +129,20 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * getting action cards methode
+     * Retrieves a sorted list of action cards currently held by the player.
      * 
      * @return list c
      */
     public List<Card> getActions() {
         List<Card> c = new ArrayList<>();
-        // List<String> crd = new ArrayList<>();
-        // crd.add("Hack Suit");
-        // crd.add("Hole in suit");
-        // crd.add("Laser blast");
-        // crd.add("Oxygen siphon");
-        // crd.add("Rocket booster");
-        // crd.add("Shield");
-        // crd.add("Tether");
-        // crd.add("Tractor beam");
-        // for (String i : crd) {
-        // for (Card j : actions) {
-        // if (j.toString().equals(i)) {
-        // c.add(j);
-        // }
-        // }
-        // }
         c.addAll(actions);
         Collections.sort(c);
         return c;
     }
 
     /**
-     * getting cards string methode
+     * Generates a string representation of the action cards held by the player,
+     * optionally enumerating them and/or excluding shield cards.
      * 
      * @param enumerated     boolean type var
      * @param excludeShields boolean type var
@@ -209,7 +199,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for getting hand
+     * Returns a list of all cards (action and oxygen) in the player's hand, sorted
+     * by predefined order.
      * 
      * @return list of Cards
      */
@@ -241,7 +232,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode returning string of hand
+     * Provides a string representation of the player's entire hand, combining both
+     * types of cards into a formatted list.
      * 
      * @return string
      */
@@ -315,7 +307,7 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for keeping track
+     * Returns the collection of cards that are on the player's track.
      * 
      * @return collection cards
      */
@@ -324,7 +316,9 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for hacks
+     * Removes a specified card from the player's hand or track, performing
+     * additional actions if the card is of type oxygen, and checks if the player
+     * remains alive.
      * 
      * @param card class type variable
      */
@@ -359,7 +353,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for hacks with different returning type
+     * Overloaded hack method that removes a card identified by its string name from
+     * the player's hand, and handles specific game actions based on the card type.
      * 
      * @param card String type var
      * @return Card ref
@@ -393,7 +388,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * has card methode for checking the card
+     * Checks the player's hand for the presence of a specified card and returns the
+     * count of how many times the specified card appears.
      * 
      * @param card String type
      * @return count of cards available
@@ -409,7 +405,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for checking the eyeball card
+     * Determines if the player has encountered a specific hazardous condition (like
+     * a solar flare) based on the top card of their track.
      * 
      * @return bool
      */
@@ -422,7 +419,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for checking if any player won
+     * Checks if the player has met the winning conditions (reaching the ship and
+     * being alive).
      * 
      * @return true if player won
      */
@@ -434,7 +432,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * keeping track of alive players
+     * Checks if the player is still alive by ensuring they have sufficient oxygen
+     * remaining.
      * 
      * @return bool value
      */
@@ -451,7 +450,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * laser blast card methode
+     * Performs an action to remove the top card from the player's track, which can
+     * represent a defensive or offensive game move.
      * 
      * @return Card ref
      */
@@ -465,7 +465,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * methode for checking availibility of oxygen card
+     * Calculates the total amount of oxygen left for the player by counting the
+     * values of the oxygen cards in their hand.
      * 
      * @return count of oxygens
      */
@@ -482,7 +483,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * peek at track methode for tracking
+     * Returns the top card from the player's track without removing it, useful for
+     * previewing potential game effects.
      * 
      * @return Card
      */
@@ -496,7 +498,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * siphone card methode returning object
+     * Removes an oxygen card from the player's hand, potentially splitting
+     * higher-value cards, and handles associated game logic.
      * 
      * @return oxygen card
      */
@@ -518,7 +521,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * stealing methode
+     * Randomly selects a card from the player's hand and removes it, simulating a
+     * stealing action in the game.
      * 
      * @return Card
      */
@@ -533,7 +537,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * swaping track in game methode
+     * Exchanges the track cards of this astronaut with another, impacting their
+     * relative positions or conditions in the game.
      * 
      * @param swapee class type variable
      */
@@ -544,8 +549,8 @@ public class Astronaut implements Serializable {
     }
 
     /**
-     * to string methode for changing it to string
-     * 
+     * Returns a string representation of the astronaut's name.
+     *
      * @return name
      */
     public String toString() {

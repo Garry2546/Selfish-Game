@@ -16,7 +16,7 @@ public class GameDeck extends Deck {
     /**
      * HACK_SUIT readonly string variables
      */
-    public final static String HACK_SUIT = "Hack suit";
+    public final static String HACK_SUIT = "Hack Suit";
     /**
      * HOLE_IN_SUIT readonly string variables
      */
@@ -63,17 +63,20 @@ public class GameDeck extends Deck {
     private final static long serialVersionUID = 1L;
 
     /**
-     * empty class constructor
+     * Default constructor for creating an empty GameDeck.
      */
     public GameDeck() {
 
     }
 
     /**
-     * parametrized class constuctor caliing load cards methode
+     * Constructs a GameDeck from a specified file path, loading cards into the
+     * deck.
+     * Additionally, it adds predefined numbers of specific oxygen cards to the
+     * deck.
      * 
-     * @param path String variable
-     * @throws Exception it throws exeption
+     * @param path Path to the file from which to load the card data.
+     * @throws Exception if there is an issue loading cards from the file.
      */
     public GameDeck(String path) throws Exception {
         try {
@@ -93,11 +96,14 @@ public class GameDeck extends Deck {
     }
 
     /**
-     * methode for drawing oxygen card
+     * Draws an oxygen card of a specified value from the deck.
      * 
-     * @param value int variable
-     * @return Oxygen
+     * @param value The oxygen value of the card to draw (1 or 2).
+     * @return The drawn Oxygen card.
+     * @throws IllegalStateException if the deck is empty or the specified oxygen
+     *                               card cannot be found.
      */
+
     public Oxygen drawOxygen(int value) {
         if (this.size() == 0) {
             throw new IllegalStateException("Empty deck!!");
@@ -124,11 +130,17 @@ public class GameDeck extends Deck {
     }
 
     /**
-     * methode for exchanging value 2 oxygen card with two value 1 oxygen card
+     * Splits a level 2 oxygen card into two level 1 oxygen cards, used for managing
+     * oxygen resources in the game.
      * 
-     * @param dbl class type variable
-     * @return o
+     * @param dbl The level 2 Oxygen card to split.
+     * @return An array containing the two level 1 Oxygen cards.
+     * @throws IllegalArgumentException if the provided card is not a level 2 oxygen
+     *                                  card.
+     * @throws IllegalStateException    if there are insufficient cards to perform
+     *                                  the split.
      */
+
     public Oxygen[] splitOxygen(Oxygen dbl) {
         if (dbl.toString().equals(GameDeck.OXYGEN_1))
             throw new IllegalArgumentException("cannot split 1 level oxygen");

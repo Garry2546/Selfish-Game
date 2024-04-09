@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-
 import selfish.deck.*;
 
 /**
@@ -39,15 +38,20 @@ public class GameEngine implements Serializable {
     private SpaceDeck spaceDeck;
     private SpaceDeck spaceDiscard;
     private static final long serialVersionUID = 1L;
+
     /**
-     * public empty class constructor
+     * Default constructor made private to prevent instantiation without
+     * initializing required components.
      */
     private GameEngine() {
 
     }
 
     /**
-     * parametized constructor
+     * Initializes a new game engine with specific seed values for randomness and
+     * deck configurations. This constructor sets up the game and space decks,
+     * shuffles them, and prepares for gameplay, ensuring files exist before
+     * proceeding.
      * 
      * @param seed      Long var
      * @param gameDeck  String var
@@ -55,58 +59,47 @@ public class GameEngine implements Serializable {
      * @throws Exception throws exception
      */
     public GameEngine(long seed, String gameDeck, String spaceDeck) throws Exception {
-        // this.random = new Random(seed);
-        // gameDiscard=new GameDeck();
-        // spaceDiscard=new SpaceDeck();
-        // try {
-        //     this.gameDeck = new GameDeck(gameDeck);
-        //     this.spaceDeck = new SpaceDeck(spaceDeck);
-        // } catch (Exception e) {
-        //     throw new GameException("file error",e);
-        // }
-        // this.gameDeck.shuffle(this.random);
-        // this.spaceDeck.shuffle(this.random);
-        File f1=new File(spaceDeck);
-        File f2=new File(gameDeck);
-        if(f1.exists() && f2.exists())
-        {
-            this.gameDeck=new GameDeck(gameDeck);
-            this.spaceDeck=new SpaceDeck(spaceDeck);
-            this.gameDiscard=new GameDeck();
-            this.spaceDiscard=new SpaceDeck();
-        }
-        else{
+        File f1 = new File(spaceDeck);
+        File f2 = new File(gameDeck);
+        if (f1.exists() && f2.exists()) {
+            this.gameDeck = new GameDeck(gameDeck);
+            this.spaceDeck = new SpaceDeck(spaceDeck);
+            this.gameDiscard = new GameDeck();
+            this.spaceDiscard = new SpaceDeck();
+        } else {
             throw new GameException("File eroor", null);
         }
-        
-        this.random=new Random(seed);
+
+        this.random = new Random(seed);
         this.gameDeck.shuffle(random);
         this.spaceDeck.shuffle(random);
     }
-    
 
     /**
-     * adding player methode
+     * Adds a new player to the game before it starts. Throws an exception if
+     * attempted after the game has started or if the maximum number of players is
+     * reached.
      * 
      * @param players String var
      * @return activeplayer size
      */
     public int addPlayer(String players) {
-        if(hasStarted==true)
-        throw new IllegalStateException("No more players can be added");
-        if (activePlayers.size()==5)
+        if (hasStarted == true)
+            throw new IllegalStateException("No more players can be added");
+        if (activePlayers.size() == 5)
             throw new IllegalStateException("No more players can be added");
         activePlayers.add(new Astronaut(players, this));
         return activePlayers.size();
     }
 
     /**
-     * ending the turn of player methode
+     * Ends the current player's turn and resets the current player to null,
+     * preparing for the next turn.
      * 
-     * @return activeplayer size
+     * @return count of active players remaining.
      */
     public int endTurn() {
-        if (corpses.contains(currentPlayer)!=true && currentPlayer!=null) {
+        if (corpses.contains(currentPlayer) != true && currentPlayer != null) {
             activePlayers.add(currentPlayer);
             currentPlayer = null;
         }
@@ -115,7 +108,8 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * methode for ending game
+     * Checks if the game is over, either by having no active players left or by
+     * having a winner
      * 
      * @return boolean if game is over
      */
@@ -128,7 +122,8 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * methode for returning list type of all players
+     * Returns a list of all players in the game, including both active players and
+     * corpses, ensuring the current player is included if alive.
      * 
      * @return list of players
      */
@@ -136,14 +131,15 @@ public class GameEngine implements Serializable {
         List<Astronaut> ast = new ArrayList<>();
         ast.addAll(activePlayers);
         ast.addAll(corpses);
-        if (this.currentPlayer != null && !corpses.contains(this.currentPlayer)){
+        if (this.currentPlayer != null && !corpses.contains(this.currentPlayer)) {
             ast.add(currentPlayer);
         }
         return ast;
     }
 
     /**
-     * public getter for current player
+     * Retrieves the current player of the game. Returns null if the game has not
+     * started.
      * 
      * @return currentplayer
      */
@@ -154,7 +150,8 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * methode for count of all players
+     * Returns the total number of players participating in the game, including both
+     * active players and corpses.
      * 
      * @return total player size
      */
@@ -163,54 +160,55 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * this methode returns gamedeck
+     * Provides access to the main game deck used in the game.
      * 
-     * @return gamedeck ref
+     * @return gamedeck reference
      */
     public GameDeck getGameDeck() {
-        
+
         return gameDeck;
     }
 
     /**
-     * methode for discarding game
+     * Provides access to the game discard pile.
      * 
-     * @return gamediscard ref
+     * @return gamediscard reference
      */
-    public GameDeck getGameDiscard(){
-       
+    public GameDeck getGameDiscard() {
+
         return gameDiscard;
     }
 
     /**
-     * public methode returning null
+     * Provides access to the space deck used for specific game actions related to
+     * space elements.
      * 
-     * @return spacedeck ref
+     * @return spacedeck reference
      */
     public SpaceDeck getSpaceDeck() {
-        
+
         return spaceDeck;
     }
 
     /**
-     * methode for getting space discard
+     * Provides access to the space discard pile.
      * 
-     * @return spacediscard ref
+     * @return spacediscard reference
      */
     public SpaceDeck getSpaceDiscard() {
-       
+
         return spaceDiscard;
     }
 
     /**
-     * returning winner player methode
+     * Determines and returns the winner of the game based on the winning conditions
+     * defined within each player's status.
      * 
      * @return winner
      */
     public Astronaut getWinner() {
         for (Astronaut i : activePlayers) {
-            if (i.hasWon() == true)
-            {
+            if (i.hasWon() == true) {
                 return i;
             }
         }
@@ -219,7 +217,8 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * methode to kill the player
+     * Marks a player as deceased, moves them to the corpse list, and discards all
+     * their cards into the game discard pile.
      * 
      * @param corpse refrence type
      */
@@ -234,11 +233,12 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * methode loading the game 
+     * Loads a saved game state from a file, returning a fully instantiated
+     * GameEngine object.
      * 
-     * @param path String var
-     * @return  gameEngine ref
-     * @throws GameException it throws exception
+     * @param path String variable
+     * @return gameEngine refrence
+     * @throws GameException Throws an exception if file operations fail.
      */
     public static GameEngine loadState(String path) throws GameException {
         GameEngine g = new GameEngine();
@@ -253,7 +253,8 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * merging deck methode
+     * Merges two decks together, typically used for combining main and discard
+     * decks. Shuffles the second deck before merging.
      * 
      * @param deck1 class ref var
      * @param deck2 class ref var
@@ -266,10 +267,10 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * saving the game method
+     * Saves the current game state to a file to allow resuming later.
      * 
      * @param path string var
-     * @throws Exception throws exception
+     * @throws Exception throws exceptions on failures of file handling.
      */
     public void saveState(String path) throws Exception {
         try (FileOutputStream f = new FileOutputStream(path);
@@ -282,34 +283,33 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * method for splitting oxygen cards
+     * Splits a double oxygen card into two single oxygen cards. Used when handling
+     * specific game mechanics related to oxygen management.
      * 
      * @param dbl class ref var
      * @return oxygen ref array
      */
     public Oxygen[] splitOxygen(Oxygen dbl) {
-        Oxygen[] o=null;
-        if((gameDeck.size()==0 && gameDiscard.size()==1) || (gameDeck.size()==1 && gameDiscard.size()==0)){
+        Oxygen[] o = null;
+        if ((gameDeck.size() == 0 && gameDiscard.size() == 1) || (gameDeck.size() == 1 && gameDiscard.size() == 0)) {
             throw new IllegalStateException();
         }
-        if(gameDiscard.size()>1)
-        {
-            o=gameDiscard.splitOxygen(dbl);
+        if (gameDiscard.size() > 1) {
+            o = gameDiscard.splitOxygen(dbl);
             gameDiscard.shuffle(random);
-        }
-        else if(gameDeck.size()>1)
-        {
-            o=gameDeck.splitOxygen(dbl);
-        }
-        else if(gameDeck.size()==1 && gameDiscard.size()==1){
+        } else if (gameDeck.size() > 1) {
+            o = gameDeck.splitOxygen(dbl);
+        } else if (gameDeck.size() == 1 && gameDiscard.size() == 1) {
             mergeDecks(gameDeck, gameDiscard);
-            o=gameDeck.splitOxygen(dbl);
+            o = gameDeck.splitOxygen(dbl);
         }
         return o;
     }
 
     /**
-     * this methode is used to start the game
+     * Initializes game settings, distributes initial cards to players, and
+     * officially starts the game. Throws exceptions if the game conditions for
+     * starting are not met.
      */
     public void startGame() {
         if (activePlayers.size() > 5 || activePlayers.size() == 1 || hasStarted == true) {
@@ -331,9 +331,10 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * this methode defines the turn of a player
+     * Begins a new turn for the next player in the sequence. Ensures game
+     * conditions are correct to start a turn and sets the current player.
      */
-    public void startTurn(){
+    public void startTurn() {
         if (hasStarted == false || activePlayers.size() == 0 || getWinner() != null || currentPlayer != null) {
             throw new IllegalStateException("Wrong approach to start turn!!");
         }
@@ -343,14 +344,15 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * this function is used to remove oxygen from players hand and add one card in
-     * his track
+     * Handles the travel action where a player advances by using oxygen cards and
+     * drawing space deck cards, potentially facing hazards. Adjusts game state
+     * based on the cards drawn and player's status.
      * 
      * @param traveller Astronaut refrence variable
      * @return Card
      * @exception Exception it throws exception
      */
-    public Card travel(Astronaut traveller){
+    public Card travel(Astronaut traveller) {
         if (currentPlayer.oxygenRemaining() <= 1)
             throw new IllegalStateException("Travelling with a single oxygen card!");
         int count = 0;
@@ -392,18 +394,12 @@ public class GameEngine implements Serializable {
         traveller.addToTrack(c);
         return c;
     }
-/**
-  * this return dead players
-  * @return list
- */
- public List<Astronaut> getCorpse(){
-    return corpses;
- }
- /**
-  * this return active players
-  * @return list
- */
- public List<Astronaut> getActivePlayers(){
-    return (List<Astronaut>) activePlayers;
- }
+
+    /*
+     * Returns a list of currently active players who have not been marked as
+     * deceased during the game.
+     */
+    public List<Astronaut> getActivePlayers() {
+        return (List<Astronaut>) activePlayers;
+    }
 }

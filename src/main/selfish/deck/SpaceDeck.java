@@ -35,7 +35,7 @@ public class SpaceDeck extends Deck {
     /**
      * METEROID readonly String var
      */
-    public static final String METEOROID = "Meteoroid";
+    public static final String METEOROID = "Meteroid";
     /**
      * MYSTERIOUS_NEBULA readonly String var
      */
@@ -58,17 +58,22 @@ public class SpaceDeck extends Deck {
     private static final long serialVersionUID = 1L;
 
     /**
-     * public empty class constructor
+     * Default constructor for creating an empty SpaceDeck. This can be used when no
+     * initial card loading is needed, or cards will be added in a different manner.
      */
+
     public SpaceDeck() {
 
     }
 
     /**
-     * class constructor
+     * Constructs a SpaceDeck by loading cards from a specified file path. This
+     * constructor initializes the space deck
+     * with space cards defined in an external data file.
      * 
-     * @param path String type
-     * @throws GameException throws exception
+     * @param path Path to the file from which to load space card data.
+     * @throws GameException if there is an issue loading cards from the file,
+     *                       encapsulating any lower-level exceptions.
      */
     public SpaceDeck(String path) throws GameException {
         try {

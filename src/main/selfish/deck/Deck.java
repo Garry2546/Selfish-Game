@@ -32,29 +32,31 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * loadcards methode for loading cards
+     * Loads cards from a specified file path into a list. This method reads card
+     * information from a file and converts it into Card objects.
      * 
-     * @param path String type
-     * @return list of cards
-     * @throws Exception it throws exception
+     * @param path Path to the file containing card data.
+     * @return A list of loaded Card objects.
+     * @throws Exception if there is an issue reading from the file or parsing card
+     *                   data.
      */
     protected static List<Card> loadCards(String path) throws Exception {
         ArrayList<Card> c = new ArrayList<Card>();
         int count = 0;
         String str;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(path)); 
-                while ((str = br.readLine()) != null) {
-                    if (count > 0) {
-                        Card cd[] = stringToCards(str);
-                        for (int i = 0; i < cd.length; i++) {
-                            c.add(cd[i]);
-                        }
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            while ((str = br.readLine()) != null) {
+                if (count > 0) {
+                    Card cd[] = stringToCards(str);
+                    for (int i = 0; i < cd.length; i++) {
+                        c.add(cd[i]);
                     }
-                    count++;
                 }
-                br.close();
-            
+                count++;
+            }
+            br.close();
+
         } catch (Exception exp) {
             throw new GameException("File error", new FileNotFoundException());
         }
@@ -63,10 +65,11 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * conversion of string to cards
+     * Converts a semicolon-separated string into an array of Card objects.
      * 
-     * @param str String type
-     * @return array of cards
+     * @param str The string to parse, expected to be in the format
+     *            "name;description;count".
+     * @return An array of Card objects.
      */
     protected static Card[] stringToCards(String str) {
 
@@ -82,10 +85,10 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * method for adding cards
+     * Adds a single card to the deck.
      * 
-     * @param card class type var
-     * @return card size
+     * @param card The card to add.
+     * @return The new size of the deck after adding the card.
      */
     public int add(Card card) {
         cards.add(card);
@@ -93,10 +96,10 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * adding more than one cards at a time method
+     * Adds multiple cards to the deck at once.
      * 
-     * @param cards list of cards
-     * @return card size
+     * @param cards The list of cards to add.
+     * @return The new size of the deck after adding the cards.
      */
     protected int add(List<Card> cards) {
         this.cards.addAll(cards);
@@ -104,9 +107,10 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * public methode for drawing cards
+     * Draws the top card from the deck.
      * 
-     * @return c
+     * @return The drawn Card.
+     * @throws IllegalStateException if the deck is empty.
      */
     public Card draw() {
         if (this.size() == 0) {
@@ -119,9 +123,9 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * methode for removing cards
+     * Removes a specific card from the deck.
      * 
-     * @param card class type var
+     * @param card The card to remove.
      */
     public void remove(Card card) {
         cards.remove(card);
@@ -129,18 +133,18 @@ public abstract class Deck implements Serializable {
     }
 
     /**
-     * methode for shuffling deck
+     * Shuffles the deck using the specified source of randomness.
      * 
-     * @param random Random type
+     * @param random The random number generator to use for shuffling.
      */
     public void shuffle(Random random) {
         Collections.shuffle((List<Card>) cards, random);
     }
 
     /**
-     * methode for getting size of deck
+     * Gets the current number of cards in the deck.
      * 
-     * @return cards size
+     * @return The number of cards in the deck.
      */
     public int size() {
         return cards.size();
